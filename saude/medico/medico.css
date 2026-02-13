@@ -1,0 +1,91 @@
+/* ======================================================
+   🔹 MIGRAÇÃO CSS PURO → BOOTSTRAP
+   ------------------------------------------------------
+   Antes:
+   - Sidebar feita com flex manual
+   - Layout principal com display: grid
+   - Cards estilizados manualmente
+   - Media queries próprias
+   - Margens e paddings fixos
+
+   Agora:
+   - Bootstrap controla:
+     .container / .container-fluid
+     .row / .col-*
+     .card
+     .navbar / .offcanvas
+     Espaçamentos m-* p-*
+     Breakpoints automáticos (Mobile-First)
+
+   Este arquivo mantém apenas identidade visual.
+   ====================================================== */
+
+
+/* ======================================================
+   🔹 TIPOGRAFIA GLOBAL
+   ------------------------------------------------------
+   Bootstrap já define fonte base.
+   Aqui mantemos Roboto como identidade visual.
+   ====================================================== */
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
+
+/* ======================================================
+   ✨ MICRO INTERAÇÃO NOS CARDS
+   ------------------------------------------------------
+   Bootstrap já fornece:
+   .card
+   .shadow
+   .border-0
+
+   Aqui adicionamos leve efeito visual.
+   ====================================================== */
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15);
+}
+
+
+/* ======================================================
+   📱 AJUSTE RESPONSIVO EXTRA (Opcional)
+   ------------------------------------------------------
+   Bootstrap já trabalha com Mobile-First.
+   Este ajuste apenas melhora a leitura.
+   ====================================================== */
+@media (max-width: 576px) {
+  h1 {
+    font-size: 1.5rem;
+  }
+}
+
+
+/* ======================================================
+   🌙 SUPORTE A DARK MODE (Bootstrap 5.3+)
+   ------------------------------------------------------
+   Para ativar:
+   <html data-bs-theme="dark">
+   ====================================================== */
+[data-bs-theme="dark"] body {
+  background-color: #121212;
+}
+
+[data-bs-theme="dark"] .card {
+  background-color: #1e1e1e;
+}
+
+
+/* ======================================================
+   ♿ ACESSIBILIDADE
+   ------------------------------------------------------
+   Melhora foco ao navegar via teclado
+   ====================================================== */
+:focus-visible {
+  outline: 3px solid #198754; /* success Bootstrap */
+  outline-offset: 2px;
+}

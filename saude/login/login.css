@@ -1,0 +1,92 @@
+/* ======================================================
+   🔹 MIGRAÇÃO CSS PURO → BOOTSTRAP
+   ------------------------------------------------------
+   Antes:
+   - Layout com flexbox/grid manual
+   - Inputs personalizados
+   - Botões customizados
+   - Responsividade feita com media queries próprias
+
+   Agora:
+   - Bootstrap controla:
+     .container
+     .row / .col-*
+     .form-control / .form-select
+     .btn
+     .card
+     Espaçamentos m-* e p-*
+     Breakpoints automáticos (Mobile-First)
+
+   Este arquivo mantém apenas identidade visual.
+   ====================================================== */
+
+
+/* ======================================================
+   🎨 FUNDO PERSONALIZADO (Mantido)
+   ------------------------------------------------------
+   Bootstrap normalmente usa bg-*.
+   Aqui mantemos gradiente próprio como identidade visual.
+   ====================================================== */
+body {
+  background: linear-gradient(135deg, #689c6d, #d4ffd7);
+  font-family: Arial, Helvetica, sans-serif;
+  min-height: 100vh;
+}
+
+
+/* ======================================================
+   ✨ MICRO INTERAÇÃO NOS CARDS
+   ------------------------------------------------------
+   Bootstrap já fornece:
+   .card
+   .shadow-sm
+
+   Aqui adicionamos apenas efeito visual extra.
+   ====================================================== */
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15);
+}
+
+
+/* ======================================================
+   📱 AJUSTE RESPONSIVO EXTRA (Opcional)
+   ------------------------------------------------------
+   Bootstrap já é Mobile-First.
+   Este ajuste apenas melhora legibilidade em telas pequenas.
+   ====================================================== */
+@media (max-width: 576px) {
+  header h1 {
+    font-size: 1.6rem;
+  }
+}
+
+
+/* ======================================================
+   🌙 SUPORTE A DARK MODE (Bootstrap 5.3+)
+   ------------------------------------------------------
+   Para ativar:
+   <html data-bs-theme="dark">
+
+   Bootstrap já muda cores automaticamente.
+   Aqui só ajustamos o gradiente.
+   ====================================================== */
+[data-bs-theme="dark"] body {
+  background: linear-gradient(135deg, #1e1e1e, #2c2c2c);
+}
+
+
+/* ======================================================
+   ♿ ACESSIBILIDADE
+   ------------------------------------------------------
+   Melhora foco ao navegar com TAB.
+   Bootstrap já ajuda com ARIA.
+   ====================================================== */
+:focus-visible {
+  outline: 3px solid #198754; /* success Bootstrap */
+  outline-offset: 2px;
+}
