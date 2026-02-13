@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Painel Médico</title>
+  <link rel="stylesheet" href="medico.css" />
+</head>
+<body>
+  <div class="container">
+    <nav class="sidebar">
+      <h2>Dr. Médico</h2>
+      <ul>
+        <li class="active">Agenda</li>
+        <li>Pacientes</li>
+        <li>Perfil</li>
+        <li><button id="logoutBtn">Sair</button></li>
+      </ul>
+    </nav>
+
+    <main class="main-content">
+      <header>
+        <h1>Agenda de Consultas</h1>
+        <p>Veja seus próximos atendimentos</p>
+      </header>
+
+      <section class="appointments-list" id="appointments-list">
+        <!-- Consultas vão aparecer aqui -->
+      </section>
+    </main>
+  </div>
+
+  <script src="medico.js"></script>
+</body>
+</html>

@@ -1,0 +1,147 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+}
+
+body, html {
+  height: 100%;
+  background: #e6f2e6;
+}
+
+.container {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Sidebar */
+
+.sidebar {
+  background: #6b8e23;
+  color: #f0fff0;
+  width: 240px;
+  padding: 30px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.sidebar h2 {
+  font-size: 1.8rem;
+  margin-bottom: 40px;
+  font-weight: 700;
+  text-shadow: 1px 1px 3px #a9d18e;
+}
+
+.sidebar ul {
+  list-style: none;
+}
+
+.sidebar ul li {
+  margin-bottom: 30px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 8px 10px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+  user-select: none;
+}
+
+.sidebar ul li.active,
+.sidebar ul li:hover {
+  background-color: #a9d18e;
+  color: #2a5d34;
+}
+
+#logoutBtn {
+  background: #4a6514;
+  border: none;
+  color: white;
+  padding: 10px;
+  border-radius: 8px;
+  width: 100%;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#logoutBtn:hover {
+  background-color: #356b0b;
+}
+
+/* Main Content */
+
+.main-content {
+  flex-grow: 1;
+  padding: 40px 50px;
+  overflow-y: auto;
+  background-color: #d6eadf;
+  border-radius: 0 15px 15px 0;
+  box-shadow: inset 0 0 30px rgba(42, 93, 52, 0.1);
+}
+
+.main-content header h1 {
+  font-size: 2.5rem;
+  color: #3a7d44;
+  margin-bottom: 6px;
+  text-shadow: 1px 1px 2px #a9d18e;
+}
+
+.main-content header p {
+  font-weight: 600;
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+  color: #4a6514;
+}
+
+/* Lista de consultas */
+
+.appointments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.appointment-card {
+  background-color: #f0fff0;
+  border: 1.8px solid #8bc34a;
+  border-radius: 14px;
+  padding: 20px 25px;
+  box-shadow: 0 5px 15px rgba(42, 93, 52, 0.22);
+  transition: box-shadow 0.3s ease;
+}
+
+.appointment-card:hover {
+  box-shadow: 0 10px 30px rgba(42, 93, 52, 0.4);
+}
+
+.appointment-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.patient-name {
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: #356b0b;
+}
+
+.appointment-date {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #558b2f;
+}
+
+.appointment-details {
+  font-size: 1rem;
+  color: #4a6514;
+  line-height: 1.4;
+}
