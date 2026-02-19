@@ -1,108 +1,68 @@
-// =====================================================
-// 🔹 Antes:
-// - Apenas verificava o select
-// - Usava alert()
-// - Não tinha validação visual
-//
-// 🔹 Agora:
-// - Usa validação Bootstrap
-// - Usa Toast para feedback
-// - Aplica is-valid / is-invalid
-// - Código mais organizado e escalável
-// =====================================================
+/**
+ * AuthManager - Gerencia o fluxo de login
+ */
+const AuthManager = {
+    init() {
+        this.form = document.getElementById('loginForm');
+        this.toastEl = document.getElementById('loginToast');
+        this.toastBootstrap = bootstrap.Toast.getOrCreateInstance(this.toastEl);
+        
+        this.bindEvents();
+    },
 
-const form = document.getElementById("loginForm");
-const nomeInput = document.getElementById("nome");
-const senhaInput = document.getElementById("senha");
-const tipoSelect = document.getElementById("tipo");
+    bindEvents() {
+        this.form.addEventListener('submit', (e) => this.handleLogin(e));
+    },
 
-form.addEventListener("submit", function (event) {
-  event.preventDefault();
+    handleLogin(e) {
+        e.preventDefault();
 
-  let isValid = true;
+        // Validação nativa do Bootstrap
+        if (!this.form.checkValidity()) {
+            e.stopPropagation();
+            this.form.classList.add('was-validated');
+            return;
+        }
 
-  // ==============================
-  // 🔹 Validação Nome
-  // ==============================
-  if (nomeInput.value.trim() === "") {
-    nomeInput.classList.add("is-invalid");
-    nomeInput.classList.remove("is-valid");
-    isValid = false;
-  } else {
-    nomeInput.classList.remove("is-invalid");
-    nomeInput.classList.add("is-valid");
-  }
+        this.processAuthentication();
+    },
 
-  // ==============================
-  // 🔹 Validação Senha
-  // ==============================
-  if (senhaInput.value.trim() === "") {
-    senhaInput.classList.add("is-invalid");
-    senhaInput.classList.remove("is-valid");
-    isValid = false;
-  } else {
-    senhaInput.classList.remove("is-invalid");
-    senhaInput.classList.add("is-valid");
-  }
+    processAuthentication() {
+        const user = {
+            name: document.getElementById('username').value,
+            role: document.getElementById('userRole').value
+        };
 
-  // ==============================
-  // 🔹 Validação Tipo
-  // ==============================
-  if (tipoSelect.value === "") {
-    tipoSelect.classList.add("is-invalid");
-    tipoSelect.classList.remove("is-valid");
-    isValid = false;
-  } else {
-    tipoSelect.classList.remove("is-invalid");
-    tipoSelect.classList.add("is-valid");
-  }
+        // Simulação de delay de rede
+        const btn = this.form.querySelector('button[type="submit"]');
+        const originalText = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = `<span class="spinner-border spinner-border-sm"></span> Autenticando...`;
 
-  // Se algo estiver inválido, parar aqui
-  if (!isValid) {
-    showToast("Por favor, preencha todos os campos corretamente.", "danger");
-    return;
-  }
+        setTimeout(() => {
+            this.showFeedback("Acesso concedido! Redirecionando...", "success");
+            
+            // Simula o redirecionamento baseado no cargo
+            setTimeout(() => {
+                window.location.href = user.role === 'medico' ? '../medico/medico.html' : '../consulta/index.html';
+            }, 1500);
+            
+        }, 1200);
+    },
 
-  // ==============================
-  // 🔹 Redirecionamento
-  // ==============================
-  showToast("Login realizado com sucesso!", "success");
-
-  setTimeout(() => {
-    if (tipoSelect.value === "paciente") {
-      window.location.href = "../paciente/paciente.html";
-    } else if (tipoSelect.value === "medico") {
-      window.location.href = "../medico/medico.html";
+    showFeedback(message, type = "success") {
+        const icon = document.getElementById('toastIcon');
+        const msgSpan = document.getElementById('toastMessage');
+        
+        
+        this.toastEl.classList.remove('bg-success', 'bg-danger');
+        this.toastEl.classList.add(type === 'success' ? 'bg-success' : 'bg-danger');
+        
+        icon.className = type === 'success' ? 'bi bi-check-circle-fill' : 'bi bi-exclamation-triangle-fill';
+        msgSpan.textContent = message;
+        
+        this.toastBootstrap.show();
     }
-  }, 1500);
-});
+};
 
-
-// =====================================================
-// 🔥 Toast Bootstrap (substitui alert())
-// =====================================================
-function showToast(message, type) {
-
-  const toastHtml = `
-    <div class="toast align-items-center text-bg-${type} border-0 position-fixed bottom-0 end-0 m-4" role="alert">
-      <div class="d-flex">
-        <div class="toast-body">
-          ${message}
-        </div>
-        <button type="button" class="btn-close btn-close-white me-2 m-auto"
-                data-bs-dismiss="toast"></button>
-      </div>
-    </div>
-  `;
-
-  document.body.insertAdjacentHTML("beforeend", toastHtml);
-
-  const toastEl = document.querySelector(".toast:last-child");
-  const toast = new bootstrap.Toast(toastEl, { delay: 3000 });
-
-  toast.show();
-
-  toastEl.addEventListener("hidden.bs.toast", () => {
-    toastEl.remove();
-  });
-}
+document.addEventListener('DOMContentLoaded', () => AuthManager.init());

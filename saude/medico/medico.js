@@ -1,216 +1,120 @@
-// =====================================================
-// 🔹 Dados simulados
-// =====================================================
-const appointments = [
-  {
-    patient: 'Ana Beatriz',
-    specialty: 'Dermatologia',
-    date: '2025-10-10 14:30',
-    notes: 'Consulta de rotina para avaliação de alergias.',
-    status: 'Confirmado'
-  },
-  {
-    patient: 'Carlos Eduardo',
-    specialty: 'Cardiologia',
-    date: '2025-10-11 09:00',
-    notes: 'Revisão pós-infarto, ajustar medicação.',
-    status: 'Pendente'
-  },
-  {
-    patient: 'Fernanda Lima',
-    specialty: 'Psicologia',
-    date: '2025-10-12 16:00',
-    notes: 'Sessão de terapia cognitivo-comportamental.',
-    status: 'Confirmado'
-  },
-];
+/**
+ * Gerenciador da Aplicação Médica
+ */
+const App = {
+    consultas: [
+        { id: 1, nome: "Maria Souza", especialidade: "Cardiologia", data: "2026-03-15", horario: "14:00", status: "Confirmado" },
+        { id: 2, nome: "João Pedro", especialidade: "Clínico Geral", data: "2026-03-18", horario: "09:30", status: "Pendente" }
+    ],
 
-const appointmentsList = document.getElementById('appointments-list');
-const logoutBtn = document.getElementById('logoutBtn');
+    init() {
+        this.cacheDOM();
+        this.bindEvents();
+        this.render();
+    },
 
+    cacheDOM() {
+        this.grid = document.getElementById('appointments-grid');
+        this.form = document.getElementById('formConsulta');
+        this.toastEl = document.getElementById('appToast');
+        this.toastBootstrap = bootstrap.Toast.getOrCreateInstance(this.toastEl);
+        this.modalBootstrap = bootstrap.Modal.getOrCreateInstance(document.getElementById('modalConsulta'));
+    },
 
-// =====================================================
-// 🔹 Formatação de Data
-// =====================================================
-function formatDate(datetime) {
-  const options = {
-    day: '2-digit',
-    month: '2-digit',
-    year: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-  };
-  return new Date(datetime).toLocaleString('pt-BR', options);
-}
+    bindEvents() {
+        this.form.addEventListener('submit', (e) => this.handleSave(e));
+    },
 
+    handleSave(e) {
+        e.preventDefault();
+        
+        const novaConsulta = {
+            id: Date.now(),
+            nome: document.getElementById('nome').value,
+            especialidade: document.getElementById('especialidade').value,
+            data: document.getElementById('data').value,
+            horario: document.getElementById('horario').value,
+            status: "Pendente"
+        };
 
-// =====================================================
-// 🔥 Criar Card Bootstrap Avançado
-// =====================================================
-function createAppointmentCard(appointment) {
+        this.consultas.push(novaConsulta);
+        this.render();
+        this.form.reset();
+        this.modalBootstrap.hide();
+        this.notify("Consulta agendada com sucesso!");
+    },
 
-  // 🔹 Antes: div manual appointment-card
-  // 🔹 Agora: grid 12 colunas Bootstrap
-  const col = document.createElement('div');
-  col.className = "col-12 col-md-6 col-lg-4";
+    removeConsulta(id) {
+        this.consultas = this.consultas.filter(c => c.id !== id);
+        this.render();
+        this.notify("Consulta desmarcada.", "bg-danger");
+    },
 
-  const card = document.createElement('div');
-  card.className = "card shadow-sm h-100 border-0";
+    updateStatus(id, novoStatus) {
+        this.consultas = this.consultas.map(c => 
+            c.id === id ? { ...c, status: novoStatus } : c
+        );
+        this.render();
+        this.notify(`Status atualizado para ${novoStatus}`);
+    },
 
-  // Header
-  const header = document.createElement('div');
-  header.className = "card-header bg-success text-white fw-semibold";
-  header.textContent = appointment.specialty;
+    notify(msg, colorClass = "bg-dark") {
+        const msgEl = document.getElementById('toastMsg');
+        this.toastEl.className = `toast align-items-center text-white border-0 shadow-lg ${colorClass}`;
+        msgEl.textContent = msg;
+        this.toastBootstrap.show();
+    },
 
-  // Body
-  const body = document.createElement('div');
-  body.className = "card-body d-flex flex-column";
+    getStatusClass(status) {
+        const map = {
+            'Confirmado': 'bg-success-subtle text-success',
+            'Pendente': 'bg-warning-subtle text-dark',
+            'Cancelado': 'bg-danger-subtle text-danger'
+        };
+        return map[status] || 'bg-secondary-subtle';
+    },
 
-  const title = document.createElement('h5');
-  title.className = "card-title fw-bold text-success";
-  title.textContent = appointment.patient;
+    render() {
+        if (this.consultas.length === 0) {
+            this.grid.innerHTML = `<div class="col-12 text-center py-5 text-muted">Nenhuma consulta encontrada.</div>`;
+            return;
+        }
 
-  const date = document.createElement('p');
-  date.className = "text-muted mb-2";
-  date.textContent = formatDate(appointment.date);
+        this.grid.innerHTML = this.consultas.map(c => `
+            <div class="col-12 col-lg-6 col-xxl-4">
+                <article class="card h-100 card-appointment border shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div>
+                                <h5 class="fw-bold mb-0">${c.nome}</h5>
+                                <span class="text-muted small">${c.especialidade}</span>
+                            </div>
+                            <span class="status-badge ${this.getStatusClass(c.status)}">${c.status}</span>
+                        </div>
+                        
+                        <div class="d-flex gap-3 mb-4">
+                            <div class="small"><i class="bi bi-calendar3 me-2 text-success"></i>${c.data}</div>
+                            <div class="small"><i class="bi bi-clock me-2 text-success"></i>${c.horario}</div>
+                        </div>
 
-  const status = document.createElement('span');
-  status.className =
-    appointment.status === "Confirmado"
-      ? "badge bg-success mb-3"
-      : "badge bg-warning text-dark mb-3";
-  status.textContent = appointment.status;
+                        <div class="d-flex gap-2 border-top pt-3 mt-auto">
+                            <div class="dropdown flex-grow-1">
+                                <button class="btn btn-light btn-sm w-100 border" data-bs-toggle="dropdown">Alterar Status</button>
+                                <ul class="dropdown-menu shadow">
+                                    <li><button class="dropdown-item" onclick="App.updateStatus(${c.id}, 'Confirmado')">Confirmar</button></li>
+                                    <li><button class="dropdown-item" onclick="App.updateStatus(${c.id}, 'Pendente')">Pendente</button></li>
+                                    <li><button class="dropdown-item" onclick="App.updateStatus(${c.id}, 'Cancelado')">Cancelar</button></li>
+                                </ul>
+                            </div>
+                            <button onclick="App.removeConsulta(${c.id})" class="btn btn-outline-danger btn-sm px-3" title="Desmarcar">
+                                <i class="bi bi-trash3"></i>
+                            </button>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        `).join('');
+    }
+};
 
-  const btn = document.createElement('button');
-
-  // 🔹 Antes: sem botão ou botão custom
-  // 🔹 Agora: btn Bootstrap + modal
-  btn.className = "btn btn-outline-success mt-auto";
-  btn.textContent = "Ver Detalhes";
-
-  btn.addEventListener('click', () => {
-    showDetailsModal(appointment);
-  });
-
-  body.appendChild(title);
-  body.appendChild(date);
-  body.appendChild(status);
-  body.appendChild(btn);
-
-  card.appendChild(header);
-  card.appendChild(body);
-  col.appendChild(card);
-
-  return col;
-}
-
-
-// =====================================================
-// 🔹 Carregar consultas
-// =====================================================
-function loadAppointments() {
-  appointmentsList.innerHTML = '';
-
-  appointments.forEach((appt) => {
-    const card = createAppointmentCard(appt);
-    appointmentsList.appendChild(card);
-  });
-}
-
-
-// =====================================================
-// 🔥 Modal Bootstrap (substitui alert)
-// =====================================================
-function showDetailsModal(appointment) {
-
-  const modalHtml = `
-  <div class="modal fade" id="detailsModal" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-
-        <div class="modal-header bg-success text-white">
-          <h5 class="modal-title">${appointment.patient}</h5>
-          <button type="button" class="btn-close btn-close-white"
-                  data-bs-dismiss="modal"></button>
-        </div>
-
-        <div class="modal-body">
-          <p><strong>Especialidade:</strong> ${appointment.specialty}</p>
-          <p><strong>Data:</strong> ${formatDate(appointment.date)}</p>
-          <p><strong>Observações:</strong><br>${appointment.notes}</p>
-        </div>
-
-        <div class="modal-footer">
-          <button type="button"
-                  class="btn btn-secondary"
-                  data-bs-dismiss="modal">
-            Fechar
-          </button>
-        </div>
-
-      </div>
-    </div>
-  </div>
-  `;
-
-  document.body.insertAdjacentHTML('beforeend', modalHtml);
-
-  const modal = new bootstrap.Modal(document.getElementById('detailsModal'));
-  modal.show();
-
-  document.getElementById('detailsModal')
-    .addEventListener('hidden.bs.modal', () => {
-      document.getElementById('detailsModal').remove();
-    });
-}
-
-
-// =====================================================
-// 🔥 Logout com Toast
-// =====================================================
-logoutBtn.addEventListener('click', () => {
-
-  showToast("Logout realizado com sucesso!", "success");
-
-  setTimeout(() => {
-    window.location.href = "../login/login.html";
-  }, 1500);
-});
-
-
-// =====================================================
-// 🔥 Toast Bootstrap
-// =====================================================
-function showToast(message, type) {
-
-  const toastHtml = `
-    <div class="toast align-items-center text-bg-${type} border-0
-                position-fixed bottom-0 end-0 m-4">
-      <div class="d-flex">
-        <div class="toast-body">
-          ${message}
-        </div>
-        <button type="button"
-                class="btn-close btn-close-white me-2 m-auto"
-                data-bs-dismiss="toast"></button>
-      </div>
-    </div>
-  `;
-
-  document.body.insertAdjacentHTML("beforeend", toastHtml);
-
-  const toastEl = document.querySelector(".toast:last-child");
-  const toast = new bootstrap.Toast(toastEl, { delay: 3000 });
-
-  toast.show();
-
-  toastEl.addEventListener("hidden.bs.toast", () => {
-    toastEl.remove();
-  });
-}
-
-
-// =====================================================
-// 🔹 Inicialização
-// =====================================================
-loadAppointments();
+document.addEventListener('DOMContentLoaded', () => App.init());

@@ -1,92 +1,63 @@
-/* ======================================================
-   🔹 MIGRAÇÃO CSS PURO → BOOTSTRAP
-   ------------------------------------------------------
-   Antes:
-   - Layout com flexbox/grid manual
-   - Inputs personalizados
-   - Botões customizados
-   - Responsividade feita com media queries próprias
+:root {
+    --brand-success: #10b981;
+}
 
-   Agora:
-   - Bootstrap controla:
-     .container
-     .row / .col-*
-     .form-control / .form-select
-     .btn
-     .card
-     Espaçamentos m-* e p-*
-     Breakpoints automáticos (Mobile-First)
-
-   Este arquivo mantém apenas identidade visual.
-   ====================================================== */
-
-
-/* ======================================================
-   🎨 FUNDO PERSONALIZADO (Mantido)
-   ------------------------------------------------------
-   Bootstrap normalmente usa bg-*.
-   Aqui mantemos gradiente próprio como identidade visual.
-   ====================================================== */
 body {
-  background: linear-gradient(135deg, #689c6d, #d4ffd7);
-  font-family: Arial, Helvetica, sans-serif;
-  min-height: 100vh;
+    background: radial-gradient(circle at top left, #e8f5e9 0%, #f8fafc 50%);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
+/* Estilos da Navbar e Menu */
+.navbar {
+    display: flex;
+    align-items: center;
+}
 
-/* ======================================================
-   ✨ MICRO INTERAÇÃO NOS CARDS
-   ------------------------------------------------------
-   Bootstrap já fornece:
-   .card
-   .shadow-sm
+.navbar-nav {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
 
-   Aqui adicionamos apenas efeito visual extra.
-   ====================================================== */
+.nav-link {
+    color: #333 !important;
+    font-weight: 500;
+    text-decoration: none;
+    padding: 0.5rem 1rem !important;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: var(--brand-success) !important;
+}
+
+.navbar-toggler {
+    border: 1px solid #ddd;
+}
+
 .card {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 1.25rem;
 }
 
-.card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15);
+.form-control:focus, .form-select:focus {
+    border-color: var(--brand-success);
+    box-shadow: 0 0 0 0.25 darkgreen; /* Sutil */
+    box-shadow: 0 0 0 0.25rem rgba(16, 185, 129, 0.15);
 }
 
-
-/* ======================================================
-   📱 AJUSTE RESPONSIVO EXTRA (Opcional)
-   ------------------------------------------------------
-   Bootstrap já é Mobile-First.
-   Este ajuste apenas melhora legibilidade em telas pequenas.
-   ====================================================== */
-@media (max-width: 576px) {
-  header h1 {
-    font-size: 1.6rem;
-  }
+.btn-success {
+    background-color: var(--brand-success);
+    border: none;
+    transition: all 0.3s ease;
 }
 
-
-/* ======================================================
-   🌙 SUPORTE A DARK MODE (Bootstrap 5.3+)
-   ------------------------------------------------------
-   Para ativar:
-   <html data-bs-theme="dark">
-
-   Bootstrap já muda cores automaticamente.
-   Aqui só ajustamos o gradiente.
-   ====================================================== */
-[data-bs-theme="dark"] body {
-  background: linear-gradient(135deg, #1e1e1e, #2c2c2c);
+.btn-success:hover {
+    background-color: #059669;
+    transform: translateY(-1px);
 }
 
-
-/* ======================================================
-   ♿ ACESSIBILIDADE
-   ------------------------------------------------------
-   Melhora foco ao navegar com TAB.
-   Bootstrap já ajuda com ARIA.
-   ====================================================== */
-:focus-visible {
-  outline: 3px solid #198754; /* success Bootstrap */
-  outline-offset: 2px;
+/* Feedback de validação customizado para combinar com o design */
+.invalid-feedback {
+    font-size: 0.8rem;
+    font-weight: 500;
 }

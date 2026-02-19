@@ -1,91 +1,44 @@
-/* ======================================================
-   🔹 MIGRAÇÃO CSS PURO → BOOTSTRAP
-   ------------------------------------------------------
-   Antes:
-   - Sidebar feita com flex manual
-   - Layout principal com display: grid
-   - Cards estilizados manualmente
-   - Media queries próprias
-   - Margens e paddings fixos
+:root {
+    --sidebar-width: 280px;
+    --bg-body: #f8fafc;
+}
 
-   Agora:
-   - Bootstrap controla:
-     .container / .container-fluid
-     .row / .col-*
-     .card
-     .navbar / .offcanvas
-     Espaçamentos m-* p-*
-     Breakpoints automáticos (Mobile-First)
-
-   Este arquivo mantém apenas identidade visual.
-   ====================================================== */
-
-
-/* ======================================================
-   🔹 TIPOGRAFIA GLOBAL
-   ------------------------------------------------------
-   Bootstrap já define fonte base.
-   Aqui mantemos Roboto como identidade visual.
-   ====================================================== */
 body {
-  font-family: 'Roboto', sans-serif;
+    background-color: var(--bg-body);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
-
-/* ======================================================
-   ✨ MICRO INTERAÇÃO NOS CARDS
-   ------------------------------------------------------
-   Bootstrap já fornece:
-   .card
-   .shadow
-   .border-0
-
-   Aqui adicionamos leve efeito visual.
-   ====================================================== */
-.card {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+/* Sidebar Fixa Desktop */
+@media (min-width: 768px) {
+    .sidebar {
+        width: var(--sidebar-width);
+        height: 100vh;
+        position: fixed;
+        left: 0;
+        top: 0;
+    }
+    .main-content {
+        margin-left: var(--sidebar-width);
+    }
 }
 
-.card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15);
+.card-appointment {
+    border: none;
+    border-radius: 12px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-
-/* ======================================================
-   📱 AJUSTE RESPONSIVO EXTRA (Opcional)
-   ------------------------------------------------------
-   Bootstrap já trabalha com Mobile-First.
-   Este ajuste apenas melhora a leitura.
-   ====================================================== */
-@media (max-width: 576px) {
-  h1 {
-    font-size: 1.5rem;
-  }
+.card-appointment:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
 }
 
-
-/* ======================================================
-   🌙 SUPORTE A DARK MODE (Bootstrap 5.3+)
-   ------------------------------------------------------
-   Para ativar:
-   <html data-bs-theme="dark">
-   ====================================================== */
-[data-bs-theme="dark"] body {
-  background-color: #121212;
+.status-badge {
+    font-size: 0.75rem;
+    padding: 0.35em 0.8em;
+    border-radius: 20px;
+    font-weight: 600;
 }
 
-[data-bs-theme="dark"] .card {
-  background-color: #1e1e1e;
-}
-
-
-/* ======================================================
-   ♿ ACESSIBILIDADE
-   ------------------------------------------------------
-   Melhora foco ao navegar via teclado
-   ====================================================== */
-:focus-visible {
-  outline: 3px solid #198754; /* success Bootstrap */
-  outline-offset: 2px;
-}
+.btn-success { background-color: #10b981; border: none; }
+.btn-success:hover { background-color: #059669; }
