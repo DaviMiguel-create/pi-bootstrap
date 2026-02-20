@@ -1,4 +1,4 @@
-/* Reset básico */
+
 * {
   margin: 0;
   padding: 0;
@@ -6,7 +6,7 @@
   font-family: Arial, Helvetica, sans-serif;
 }
 
-/* Fundo da página */
+
 body {
   height: 100vh;
   display: flex;
@@ -15,7 +15,7 @@ body {
   background: linear-gradient(135deg, #689c6d, #d4ffd7); /* Verde saúde */
 }
 
-/* Container do formulário */
+
 form {
   background: #ffffff;
   padding: 2rem;
@@ -25,14 +25,14 @@ form {
   text-align: center;
 }
 
-/* Título */
+
 h1 {
   margin-bottom: 20px;
   color: #3e7d2e; /* Verde mais escuro */
   font-size: 24px;
 }
 
-/* Labels */
+
 label {
   display: block;
   margin-bottom: 6px;
@@ -41,7 +41,7 @@ label {
   text-align: left;
 }
 
-/* Inputs e Select */
+
 input, select {
   width: 100%;
   padding: 10px;
@@ -58,13 +58,13 @@ input:focus, select:focus {
   box-shadow: 0 0 5px rgba(67, 160, 71, 0.5);
 }
 
-/* Botão */
+
 button {
   width: 100%;
   padding: 12px;
   border: none;
   border-radius: 8px;
-  background: #43a047; /* Verde principal */
+  background: #43a047; 
   color: white;
   font-size: 16px;
   font-weight: bold;
@@ -77,7 +77,7 @@ button:hover {
   transform: scale(1.05);
 }
 
-/* Pequeno efeito no formulário */
+
 form:hover {
   transform: translateY(-3px);
   transition: transform 0.3s ease;

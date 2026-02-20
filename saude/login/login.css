@@ -1,5 +1,6 @@
 :root {
     --brand-success: #10b981;
+    --brand-dark: #059669;
 }
 
 body {
@@ -7,57 +8,76 @@ body {
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
-/* Estilos da Navbar e Menu */
-.navbar {
-    display: flex;
-    align-items: center;
-}
-
-.navbar-nav {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
+.navbar-brand {
+    letter-spacing: -0.5px;
 }
 
 .nav-link {
-    color: #333 !important;
-    font-weight: 500;
-    text-decoration: none;
-    padding: 0.5rem 1rem !important;
-    transition: color 0.3s ease;
+    transition: all 0.3s ease;
+    border-radius: 0.375rem;
 }
 
 .nav-link:hover {
     color: var(--brand-success) !important;
-}
-
-.navbar-toggler {
-    border: 1px solid #ddd;
+    background-color: rgba(16, 185, 129, 0.1);
 }
 
 .card {
     border-radius: 1.25rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.form-control:focus, .form-select:focus {
+.card:hover {
+    transform: translateY(-2px);
+}
+
+.form-control,
+.form-select {
+    border: 1.5px solid #e0e0e0;
+    border-radius: 0.75rem;
+    padding: 0.75rem 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus,
+.form-select:focus {
     border-color: var(--brand-success);
-    box-shadow: 0 0 0 0.25 darkgreen; /* Sutil */
-    box-shadow: 0 0 0 0.25rem rgba(16, 185, 129, 0.15);
+    background-color: #fff;
+    box-shadow: 0 0 0 0.2rem rgba(16, 185, 129, 0.15);
+}
+
+.form-floating > .form-control:focus ~ label,
+.form-floating > .form-select:focus ~ label {
+    color: var(--brand-success);
 }
 
 .btn-success {
     background-color: var(--brand-success);
-    border: none;
     transition: all 0.3s ease;
+    border-radius: 0.75rem;
 }
 
 .btn-success:hover {
-    background-color: #059669;
-    transform: translateY(-1px);
+    background-color: var(--brand-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
 }
 
-/* Feedback de validação customizado para combinar com o design */
-.invalid-feedback {
-    font-size: 0.8rem;
-    font-weight: 500;
+.btn-success:active {
+    transform: translateY(0);
+}
+
+.btn-link {
+    transition: all 0.3s ease;
+}
+
+.btn-link:hover {
+    color: var(--brand-success) !important;
+}
+
+@media (min-width: 992px) {
+    .card {
+        border-radius: 1.5rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08) !important;
+    }
 }

@@ -1,12 +1,8 @@
-/**
- * AuthManager - Gerencia o fluxo de login
- */
 const AuthManager = {
     init() {
         this.form = document.getElementById('loginForm');
         this.toastEl = document.getElementById('loginToast');
         this.toastBootstrap = bootstrap.Toast.getOrCreateInstance(this.toastEl);
-        
         this.bindEvents();
     },
 
@@ -17,7 +13,6 @@ const AuthManager = {
     handleLogin(e) {
         e.preventDefault();
 
-        // Validação nativa do Bootstrap
         if (!this.form.checkValidity()) {
             e.stopPropagation();
             this.form.classList.add('was-validated');
@@ -28,32 +23,25 @@ const AuthManager = {
     },
 
     processAuthentication() {
-        const user = {
-            name: document.getElementById('username').value,
-            role: document.getElementById('userRole').value
-        };
-
-        // Simulação de delay de rede
-        const btn = this.form.querySelector('button[type="submit"]');
-        const originalText = btn.innerHTML;
-        btn.disabled = true;
-        btn.innerHTML = `<span class="spinner-border spinner-border-sm"></span> Autenticando...`;
+        const username = document.getElementById('username').value;
+        const userRole = document.getElementById('userRole').value;
+        
+        const submitBtn = this.form.querySelector('button[type="submit"]');
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Autenticando...';
 
         setTimeout(() => {
-            this.showFeedback("Acesso concedido! Redirecionando...", "success");
+            this.showFeedback('Acesso concedido! Redirecionando...', 'success');
             
-            // Simula o redirecionamento baseado no cargo
             setTimeout(() => {
-                window.location.href = user.role === 'medico' ? '../medico/medico.html' : '../consulta/index.html';
+                window.location.href = '../medico/medico.html';
             }, 1500);
-            
         }, 1200);
     },
 
-    showFeedback(message, type = "success") {
+    showFeedback(message, type = 'success') {
         const icon = document.getElementById('toastIcon');
         const msgSpan = document.getElementById('toastMessage');
-        
         
         this.toastEl.classList.remove('bg-success', 'bg-danger');
         this.toastEl.classList.add(type === 'success' ? 'bg-success' : 'bg-danger');

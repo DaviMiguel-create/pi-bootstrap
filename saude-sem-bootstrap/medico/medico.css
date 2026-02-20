@@ -18,7 +18,7 @@ body, html {
   overflow: hidden;
 }
 
-/* Sidebar */
+
 
 .sidebar {
   background: #6b8e23;
@@ -73,9 +73,6 @@ body, html {
 #logoutBtn:hover {
   background-color: #356b0b;
 }
-
-/* Main Content */
-
 .main-content {
   flex-grow: 1;
   padding: 40px 50px;
@@ -99,7 +96,7 @@ body, html {
   color: #4a6514;
 }
 
-/* Lista de consultas */
+
 
 .appointments-list {
   display: flex;

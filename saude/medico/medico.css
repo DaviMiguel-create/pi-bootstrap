@@ -1,14 +1,12 @@
 :root {
     --sidebar-width: 280px;
-    --bg-body: #f8fafc;
 }
 
 body {
-    background-color: var(--bg-body);
+    background-color: #f8fafc;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
-/* Sidebar Fixa Desktop */
 @media (min-width: 768px) {
     .sidebar {
         width: var(--sidebar-width);
@@ -23,22 +21,16 @@ body {
 }
 
 .card-appointment {
-    border: none;
-    border-radius: 12px;
+    border-radius: 0.875rem;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .card-appointment:hover {
     transform: translateY(-4px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
 }
 
 .status-badge {
-    font-size: 0.75rem;
-    padding: 0.35em 0.8em;
     border-radius: 20px;
     font-weight: 600;
 }
-
-.btn-success { background-color: #10b981; border: none; }
-.btn-success:hover { background-color: #059669; }
